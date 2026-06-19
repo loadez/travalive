@@ -1,0 +1,41 @@
+name: 🐛 Bug report
+description: Something isn't working / it desyncs / wrong speed
+labels: [bug]
+body:
+  - type: input
+    id: browser
+    attributes:
+      label: Browser & version
+      placeholder: "Chrome 145 / Firefox 152 / Brave 1.6x"
+    validations: { required: true }
+  - type: input
+    id: ext_version
+    attributes:
+      label: TravaLive version
+      placeholder: "0.1.2 — see chrome://extensions or about:addons"
+    validations: { required: true }
+  - type: textarea
+    id: hud
+    attributes:
+      label: HUD line
+      description: "The green overlay text at the moment of the bug, e.g. `lat 12.3s → 10s  1.20x  [yt]`"
+      placeholder: "lat 12.3s → 10s  1.20x  [yt]"
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: "Live or VOD? At the live edge or scrubbed back? Was an ad playing? Did you set a manual speed?"
+  - type: textarea
+    id: console
+    attributes:
+      label: Console errors (optional)
+      render: shell
