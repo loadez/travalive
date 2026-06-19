@@ -1,0 +1,23 @@
+{
+  "extDesc": {
+    "message": "Hold a YouTube live at a fixed delay behind live so you and your friends stay frame-synced for reactions."
+  },
+  "popupSubtitle": {
+    "message": "Hold live at a fixed delay. Friends pick the same number → synced."
+  },
+  "enabled": {
+    "message": "Enabled"
+  },
+  "debugHud": {
+    "message": "Debug HUD"
+  },
+  "targetDelay": {
+    "message": "Target delay"
+  },
+  "popupHint": {
+    "message": "Everyone in the watch party sets the same target. Can't go below the stream's real latency floor."
+  },
+  "madeBy": {
+    "message": "made by"
+  }
+}

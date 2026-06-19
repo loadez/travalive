@@ -1,0 +1,23 @@
+{
+  "extDesc": {
+    "message": "Trava uma live do YouTube num atraso fixo pra você e a galera assistirem em sincronia, no mesmo frame."
+  },
+  "popupSubtitle": {
+    "message": "Trava a live num atraso fixo. A galera escolhe o mesmo número → sincronizado."
+  },
+  "enabled": {
+    "message": "Ativado"
+  },
+  "debugHud": {
+    "message": "HUD de debug"
+  },
+  "targetDelay": {
+    "message": "Atraso alvo"
+  },
+  "popupHint": {
+    "message": "Todo mundo da resenha coloca o mesmo alvo. Não dá pra ficar mais perto do que a latência real da live."
+  },
+  "madeBy": {
+    "message": "feito por"
+  }
+}
