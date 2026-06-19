@@ -24,11 +24,11 @@ Abra uma live, clique no ícone, defina o atraso alvo. Todo mundo do grupo coloc
 
 O player do YouTube já sabe quantos segundos atrás do ao vivo você está — a mesma referência pra todos — então não precisa de relógio próprio/NTP:
 
-1. Lê a latência da live (alternativa: distância até a borda do DVR).
+1. Lê a **Live Latency** do próprio YouTube — o mesmo número que todo viewer vê.
 2. Ajusta `video.playbackRate` (até **2×** pra alcançar, até **0,8×** pra recuar suavemente) e trava no seu alvo.
 3. Mesmo alvo pra todos → mesmo frame capturado → **sincronizado**.
 
-Só age quando você está **no ao vivo**; se você volta pra rever um lance, ele não mexe na sua velocidade. Ignora **anúncios** e **vídeos normais (VOD)**. HUD opcional (canto superior esquerdo): `lat 12.3s → 10s  1.20x  [yt]`.
+Só age numa **live** e só enquanto você está no **ao vivo** — se você volta pra rever um lance, ele não mexe na sua velocidade. **Nunca altera a velocidade de anúncios nem de vídeos normais (não ao vivo)** (não pula nem adianta nada — só não encosta neles). HUD opcional (canto superior esquerdo): `lat 12.3s → 10s  1.20x`.
 
 ## Limites
 

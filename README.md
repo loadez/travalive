@@ -24,11 +24,11 @@ Open a live, click the toolbar icon, set the target delay. Everyone in the group
 
 YouTube's player already knows how far behind live you are — the same reference for every viewer — so there's no custom clock/NTP:
 
-1. Read the live's latency (fallback: distance from the DVR edge).
+1. Read YouTube's own **Live Latency** for the stream — the same number every viewer sees.
 2. Nudge `video.playbackRate` (up to **2×** to catch up, down to **0.8×** to ease back) to hold your target.
 3. Same target everywhere → same captured frame → **synced**.
 
-It only acts at the **live edge**; scrub back to review a replay and it leaves your playback speed alone. It skips **ads** and normal **VODs**. Optional HUD (top-left): `lat 12.3s → 10s  1.20x  [yt]`.
+It only acts on a **live** stream and only while you're at the **live edge** — scrub back to review a replay and it leaves your playback speed alone. It **never changes the speed of ads or normal (non-live) videos** (it doesn't fast-forward or skip them — it simply doesn't touch them). Optional HUD (top-left): `lat 12.3s → 10s  1.20x`.
 
 ## Limits
 
