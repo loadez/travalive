@@ -8,7 +8,7 @@
 ![sem build](https://img.shields.io/badge/build-nenhum-lightgrey)
 
 Trava uma **live** do YouTube num atraso fixo pra você e a galera ficarem **em sincronia, no mesmo frame** —
-todo mundo reage ao gol no mesmo instante. Feito pras resenhas da Copa 2026 (lives da Casé TV) no Discord.
+todo mundo reage ao gol no mesmo instante. Feito pras resenhas das lives da Copa 2026 no Discord.
 
 ## Instalar
 

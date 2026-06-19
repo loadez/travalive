@@ -8,7 +8,7 @@
 ![no build](https://img.shields.io/badge/build-none-lightgrey)
 
 Hold a YouTube **live** at a fixed delay so you and your friends stay **frame-synced** — everyone
-reacts to the goal at the same instant. Built for World Cup 2026 watch-alongs (Casé TV lives) over Discord.
+reacts to the goal at the same instant. Built for World Cup 2026 live watch-alongs over Discord.
 
 ## Install
 
