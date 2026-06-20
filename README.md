@@ -18,7 +18,7 @@ reacts to the goal at the same instant. Built for World Cup 2026 live watch-alon
 - **Chrome / Brave / Edge:** `chrome://extensions` → *Developer mode* → *Load unpacked* → the unzipped folder
 - **Firefox:** `about:debugging#/runtime/this-firefox` → *Load Temporary Add-on* → `manifest.json` _(temporary — removed on restart)_
 
-Open a live, click the toolbar icon, set the target delay. Everyone in the group sets the **same number** → synced.
+Open a live, click the toolbar icon, set the target delay. Everyone in the group sets the **same number** → synced. The popup value is a **global default**; each stream remembers its own target (different lives have different latency floors) — fine-tune it with the **−/+ on the on-page HUD**.
 
 ## How it works
 

@@ -18,7 +18,7 @@ todo mundo reage ao gol no mesmo instante. Feito pras resenhas das lives da Copa
 - **Chrome / Brave / Edge:** `chrome://extensions` → *Modo do desenvolvedor* → *Carregar sem compactação* → a pasta descompactada
 - **Firefox:** `about:debugging#/runtime/this-firefox` → *Carregar extensão temporária* → `manifest.json` _(temporário — some ao reiniciar)_
 
-Abra uma live, clique no ícone, defina o atraso alvo. Todo mundo do grupo coloca o **mesmo número** → sincronizado.
+Abra uma live, clique no ícone, defina o atraso alvo. Todo mundo do grupo coloca o **mesmo número** → sincronizado. O valor do popup é um **padrão global**; cada live guarda o próprio alvo (cada uma tem uma latência mínima diferente) — ajuste com o **−/+ no HUD da página**.
 
 ## Como funciona
 

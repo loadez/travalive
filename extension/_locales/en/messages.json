@@ -12,10 +12,10 @@
     "message": "Debug HUD"
   },
   "targetDelay": {
-    "message": "Target delay"
+    "message": "Default delay"
   },
   "popupHint": {
-    "message": "Everyone in the watch party sets the same target. Can't go below the stream's real latency floor."
+    "message": "Everyone sets the same number → synced. This is the default; fine-tune per stream with −/+ on the on-page HUD. Can't go below the stream's real latency floor."
   },
   "madeBy": {
     "message": "made by"

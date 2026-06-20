@@ -12,10 +12,10 @@
     "message": "HUD de debug"
   },
   "targetDelay": {
-    "message": "Atraso alvo"
+    "message": "Atraso padrão"
   },
   "popupHint": {
-    "message": "Todo mundo da resenha coloca o mesmo alvo. Não dá pra ficar mais perto do que a latência real da live."
+    "message": "Todo mundo coloca o mesmo número → sincronizado. Esse é o padrão; ajuste por live com −/+ no HUD na página. Não dá pra ficar mais perto que a latência real da live."
   },
   "madeBy": {
     "message": "feito por"
