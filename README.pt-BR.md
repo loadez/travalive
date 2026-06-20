@@ -2,6 +2,7 @@
 
 [English](README.md) · **[Português](README.pt-BR.md)**
 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/efghjheocblnlfgimdhnapdlmojijoaa?label=chrome%20web%20store)](https://chromewebstore.google.com/detail/travalive/efghjheocblnlfgimdhnapdlmojijoaa)
 [![release](https://img.shields.io/github/v/release/loadez/travalive)](https://github.com/loadez/travalive/releases/latest)
 ![license](https://img.shields.io/badge/license-GPL--3.0--only-blue)
 ![manifest](https://img.shields.io/badge/manifest-v3-brightgreen)
@@ -12,7 +13,7 @@ todo mundo reage ao gol no mesmo instante. Feito pras resenhas das lives da Copa
 
 ## Instalar
 
-**Lojas (um clique — em análise):** Chrome Web Store · Firefox Add-ons _(em breve)_.
+**Um clique:** [**Instalar pela Chrome Web Store**](https://chromewebstore.google.com/detail/travalive/efghjheocblnlfgimdhnapdlmojijoaa) (funciona no Chrome / Brave / Edge / qualquer Chromium). Firefox Add-ons _(em análise — em breve)_.
 
 **Agora (manual):** baixe a [última release](https://github.com/loadez/travalive/releases/latest), descompacte e carregue sem empacotar:
 - **Chrome / Brave / Edge:** `chrome://extensions` → *Modo do desenvolvedor* → *Carregar sem compactação* → a pasta descompactada

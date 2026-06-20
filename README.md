@@ -2,6 +2,7 @@
 
 **[English](README.md)** · [Português](README.pt-BR.md)
 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/efghjheocblnlfgimdhnapdlmojijoaa?label=chrome%20web%20store)](https://chromewebstore.google.com/detail/travalive/efghjheocblnlfgimdhnapdlmojijoaa)
 [![release](https://img.shields.io/github/v/release/loadez/travalive)](https://github.com/loadez/travalive/releases/latest)
 ![license](https://img.shields.io/badge/license-GPL--3.0--only-blue)
 ![manifest](https://img.shields.io/badge/manifest-v3-brightgreen)
@@ -12,7 +13,7 @@ reacts to the goal at the same instant. Built for World Cup 2026 live watch-alon
 
 ## Install
 
-**Stores (one-click — pending review):** Chrome Web Store · Firefox Add-ons _(coming soon)_.
+**One-click:** [**Install from the Chrome Web Store**](https://chromewebstore.google.com/detail/travalive/efghjheocblnlfgimdhnapdlmojijoaa) (works on Chrome / Brave / Edge / any Chromium). Firefox Add-ons _(in review — coming soon)_.
 
 **Now (manual):** download the [latest release](https://github.com/loadez/travalive/releases/latest), unzip, and load unpacked:
 - **Chrome / Brave / Edge:** `chrome://extensions` → *Developer mode* → *Load unpacked* → the unzipped folder
