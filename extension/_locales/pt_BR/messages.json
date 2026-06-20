@@ -14,8 +14,23 @@
   "targetDelay": {
     "message": "Atraso padrão"
   },
+  "streamDelay": {
+    "message": "Atraso desta live"
+  },
   "popupHint": {
-    "message": "Todo mundo coloca o mesmo número → sincronizado. Esse é o padrão; ajuste por live com −/+ no HUD na página. Não dá pra ficar mais perto que a latência real da live."
+    "message": "Todo mundo coloca o mesmo número → sincronizado. Cada live guarda o próprio atraso. Não dá pra ficar mais perto que a latência real da live."
+  },
+  "latClassLabel": {
+    "message": "Esta live"
+  },
+  "latNormal": {
+    "message": "latência normal (~10s+)"
+  },
+  "latLow": {
+    "message": "latência baixa (~2–4s)"
+  },
+  "latUltralow": {
+    "message": "latência ultrabaixa (~1–2s)"
   },
   "madeBy": {
     "message": "feito por"

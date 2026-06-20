@@ -15,6 +15,7 @@
     .big { font: 600 22px/1 ui-monospace, monospace; color: #39ff14; }
     input[type=range] { width: 100%; accent-color: #39ff14; }
     .hint { color: #777; font-size: 11px; margin-top: 10px; }
+    .lat { color: #39ff14; font-size: 11px; margin: 7px 0 0; }
     .by { text-align: center; color: #666; font-size: 11px; margin: 14px 0 0; }
     .by a { color: #39ff14; text-decoration: none; }
     .by a:hover { text-decoration: underline; }
@@ -41,12 +42,14 @@
   </div>
 
   <div class="row">
-    <span data-i18n="targetDelay">Default delay</span>
+    <span id="tLabel" data-i18n="targetDelay">Default delay</span>
     <span class="big"><span id="val">10</span>s</span>
   </div>
-  <input type="range" id="target" min="2" max="60" step="1" value="10">
+  <input type="range" id="target" min="1" max="60" step="1" value="10">
 
-  <p class="hint" data-i18n="popupHint">Everyone sets the same number → synced. This is the default; fine-tune per stream with −/+ on the on-page HUD. Can't go below the stream's real latency floor.</p>
+  <p class="lat" id="latInfo" hidden></p>
+
+  <p class="hint" data-i18n="popupHint">Everyone sets the same number → synced. Each live remembers its own delay. Can't go below the stream's real latency floor.</p>
 
   <p class="by"><span data-i18n="madeBy">made by</span> <a id="byLink" href="https://loadez.dev.br" target="_blank" rel="noopener">loadez</a></p>
 

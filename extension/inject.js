@@ -1,19 +1,20 @@
 // inject.js — runs in the PAGE's MAIN world so it can reach YouTube's player API
 // (getStatsForNerds / movie_player) and set video.playbackRate directly.
-// It reads YT's own live latency and nudges playbackRate to hold it at the target.
+// It reads YT's own live latency and nudges playbackRate to hold it at the effective target.
 (() => {
   'use strict';
 
-  // cfg.target = the GLOBAL DEFAULT delay (popup slider). The EFFECTIVE target is
-  // per-video: a stream-specific override (set via the HUD −/+) wins when present,
-  // because different lives have different latency floors (football ~7s vs a
-  // low-latency stream ~3s). See effTarget().
-  const cfg = { enabled: true, target: 10, hud: true };
+  // cfg.target = the GLOBAL DEFAULT delay. The EFFECTIVE target is per-video: a
+  // stream-specific override (set from the popup) wins when present, because different
+  // lives have different latency floors (football ~7s vs a low-latency stream ~3s).
+  // hud is a DEBUG overlay — off by default.
+  const cfg = { enabled: true, target: 10, hud: false };
 
   let curVid = null;        // YouTube videoId of the player we're controlling
   let perVidTarget = null;  // override for curVid (s), or null = use cfg.target (the default)
+  let latClass = null;      // stream latency mode (NORMAL/LOW/ULTRALOW) — informs the popup
   const effTarget = () => (perVidTarget != null ? perVidTarget : cfg.target);
-  const clampTgt = (n) => Math.max(2, Math.min(60, n));
+  const clampTgt = (n) => Math.max(1, Math.min(60, n));
 
   // tuning
   const TICK = 500;     // control loop period (ms)
@@ -30,10 +31,10 @@
     } catch (_) { return null; }
   }
 
-  // ---- bridge to the isolated content script (it owns chrome.storage) ----
-  // page -> content: ask for / persist a per-video target.
+  // ask the isolated content script (it owns chrome.storage) for this video's saved target
   const reqTarget = (vid) => window.postMessage({ source: 'ytsync-ext-page', type: 'get', videoId: vid }, '*');
-  const saveTarget = (vid, t) => window.postMessage({ source: 'ytsync-ext-page', type: 'set', videoId: vid, target: t }, '*');
+  // tell content the stream's latency mode so the popup can show it (NORMAL/LOW/ULTRALOW)
+  const sendStatus = () => window.postMessage({ source: 'ytsync-ext-page', type: 'status', videoId: curVid, latencyClass: latClass }, '*');
 
   window.addEventListener('message', (e) => {
     if (e.source !== window || !e.data || e.data.source !== 'ytsync-ext') return;
@@ -46,7 +47,7 @@
       if (!cfg.enabled) release(lastVideo); // release on disable (without stealing a manual rate)
       paint();
     }
-    // per-video target reply (only trust it for the video we're on now)
+    // per-video target (from a get reply or a live popup change) — only for the video we're on
     if (e.data.perVideo && e.data.perVideo.videoId === curVid) {
       const t = e.data.perVideo.target;
       perVidTarget = (typeof t === 'number' && isFinite(t)) ? clampTgt(t) : null;
@@ -81,6 +82,20 @@
     return null; // no signal => treat as off-head => hands off
   }
 
+  // YouTube's latency mode for this stream (NORMAL / LOW / ULTRALOW). A stream property,
+  // same for every viewer — purely informational (shown in the popup), never auto-controls.
+  // NOTE: it lives in getVideoStats().latency_class (a clean enum), NOT in getStatsForNerds()
+  // (which only has live_mode, a human-readable string).
+  function latencyClass(p) {
+    try {
+      if (p && typeof p.getVideoStats === 'function') {
+        const s = p.getVideoStats() || {};
+        if (s.latency_class) return String(s.latency_class).toUpperCase();
+      }
+    } catch (_) {}
+    return null;
+  }
+
   // Release control WITHOUT stealing the user's manual speed: only undo a non-1 rate we set
   // and that the user hasn't changed since.
   function release(v) {
@@ -98,14 +113,8 @@
     (p && p.classList && p.classList.contains('ytp-live')) ||
     (p && !!p.querySelector('.ytp-live-badge'));
 
-  // ---- HUD (interactive: −/+ adjust the per-stream target) ----
-  let hud, hStat, hMinus, hTgt, hPlus, hRate;
-  let lastVideo = null, appliedRate = null; // appliedRate = the rate WE last set (null = none)
-  function adjust(d) {
-    perVidTarget = clampTgt(effTarget() + d);
-    if (curVid) saveTarget(curVid, perVidTarget);  // persist this stream's override
-    paint();
-  }
+  // ---- HUD (DEBUG overlay only — display, never a control surface) ----
+  let hud, lastVideo = null, appliedRate = null; // appliedRate = the rate WE last set (null = none)
   function ensureHud() {
     if (hud && hud.isConnected) return; // recreate if YT's SPA re-render detached it
     hud = document.createElement('div');
@@ -114,49 +123,24 @@
       background: 'rgba(0,0,0,.80)', color: '#39ff14',
       font: '12px/1.45 ui-monospace,Menlo,Consolas,monospace',
       padding: '4px 8px', borderRadius: '5px', pointerEvents: 'none',
-      whiteSpace: 'pre', letterSpacing: '.3px', userSelect: 'none'
+      whiteSpace: 'pre', letterSpacing: '.3px'
     });
-    const mkBtn = (txt, d) => {
-      const b = document.createElement('span');
-      b.textContent = txt;
-      Object.assign(b.style, {
-        pointerEvents: 'auto', cursor: 'pointer', padding: '0 5px',
-        color: '#39ff14', fontWeight: '700'
-      });
-      b.addEventListener('click', () => adjust(d));
-      return b;
-    };
-    hStat = document.createElement('span');
-    hMinus = mkBtn('[−]', -1);
-    hTgt = document.createElement('span');
-    hPlus = mkBtn('[+]', +1);
-    hRate = document.createElement('span');
-    hud.append(hStat, hMinus, hTgt, hPlus, hRate);
     (document.body || document.documentElement).appendChild(hud);
   }
-  let view = { mode: 'off', lat: 0, rate: 1 }; // what paint() should render
-  function paint() {
-    if (!hud) return;
-    if (view.mode === 'off') { hud.style.display = 'none'; return; }
-    hud.style.display = '';
-    hTgt.textContent = ` ${effTarget()}s `;
-    if (view.mode === 'sync') {
-      hStat.textContent = `▶ sync  lat ${view.lat.toFixed(1)}s →`;
-      hRate.textContent = `  ${view.rate.toFixed(2)}x`;
-    } else { // 'behind' — live stream but off the head
-      hStat.textContent = `⏸ behind — click LIVE to sync  →`;
-      hRate.textContent = ``;
-    }
-  }
+  let hudText = '';
+  function paint() { if (hud) hud.textContent = hudText; }
 
   // ---- control loop ----
   function loop() {
     try {
       // track the current video; when it changes, drop the old override and fetch this one's
       const vid = videoId();
-      if (vid !== curVid) { curVid = vid; perVidTarget = null; if (vid) reqTarget(vid); }
+      if (vid !== curVid) { curVid = vid; perVidTarget = null; latClass = null; if (vid) reqTarget(vid); }
 
       const p = getPlayer();
+      // surface the stream's latency mode to the popup (only on change)
+      const lc = latencyClass(p);
+      if (lc !== latClass) { latClass = lc; sendStatus(); }
       // scope the video to THIS player — never a global query (sidebar previews,
       // miniplayer and ads are other <video> elements that must not be touched).
       const v = p ? (p.querySelector('video.html5-main-video') || p.querySelector('video')) : null;
@@ -172,19 +156,21 @@
         else if (err < -TOL) rate = Math.max(MINR, 1 + err * GAIN);
         if (Math.abs(v.playbackRate - rate) > 0.01) v.playbackRate = rate;
         appliedRate = rate;
-        view = { mode: 'sync', lat: lls, rate };
-        if (cfg.hud) { ensureHud(); paint(); } else if (hud) hud.style.display = 'none';
+        hudText = `▶ sync  lat ${lls.toFixed(1)}s → ${effTarget()}s  ${rate.toFixed(2)}x`;
+        if (cfg.hud) { ensureHud(); if (hud) hud.style.display = ''; paint(); }
+        else if (hud) hud.style.display = 'none';
       } else {
         // off the live head (scrubbed back to review), paused, disabled, ad, or VOD:
         // HANDS OFF — release only OUR rate, never the user's manual speed.
         release(v);
         if (live && !atHead && cfg.enabled && !isAd(p) && cfg.hud) {
           // live stream but behind the head: show we're intentionally idle, not broken
-          view = { mode: 'behind' };
-          ensureHud(); paint();
-        } else {
-          view = { mode: 'off' };
-          if (hud) hud.style.display = 'none';
+          ensureHud();
+          hudText = `⏸ behind live — hands off (your speed). Click LIVE to sync.`;
+          if (hud) hud.style.display = '';
+          paint();
+        } else if (hud) {
+          hud.style.display = 'none';
         }
       }
     } catch (_) {}

@@ -14,8 +14,23 @@
   "targetDelay": {
     "message": "Default delay"
   },
+  "streamDelay": {
+    "message": "Delay for this live"
+  },
   "popupHint": {
-    "message": "Everyone sets the same number → synced. This is the default; fine-tune per stream with −/+ on the on-page HUD. Can't go below the stream's real latency floor."
+    "message": "Everyone sets the same number → synced. Each live remembers its own delay. Can't go below the stream's real latency floor."
+  },
+  "latClassLabel": {
+    "message": "This live"
+  },
+  "latNormal": {
+    "message": "normal latency (~10s+)"
+  },
+  "latLow": {
+    "message": "low latency (~2–4s)"
+  },
+  "latUltralow": {
+    "message": "ultra-low latency (~1–2s)"
   },
   "madeBy": {
     "message": "made by"
